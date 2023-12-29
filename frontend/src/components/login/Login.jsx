@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import handleLogin from "../../assets/helperFunctions/AuthFunctions";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
+  const [msg, setMsg] = useState("");
   return (
     <>
       <div className="login-container w-full h-screen pt-20 px-2 sm:flex sm:justify-center sm:items-center">
@@ -19,7 +21,6 @@ function Login() {
                   e.preventDefault();
                   e.stopPropagation();
                   setEmail(e.target.value);
-                  value = email;
                 }}
                 placeholder="Enter Your Email"
                 type="email"
@@ -35,7 +36,6 @@ function Login() {
                   e.preventDefault();
                   e.stopPropagation();
                   setPassword(e.target.value);
-                  value = Password;
                 }}
                 placeholder="Enter Your Password"
                 type="password"
@@ -43,7 +43,11 @@ function Login() {
                 id="password"
               />
             </div>
-            <button className="hover:bg-slate-300 rounded-md px-6 py-2 duration-150">
+            <h1>{msg}</h1>
+            <button
+              onClick={() => handleLogin(email, Password, setMsg)}
+              className="hover:bg-slate-300 rounded-md px-6 py-2 duration-150"
+            >
               Submit
             </button>
           </div>
