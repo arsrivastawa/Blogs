@@ -1,18 +1,20 @@
 import axios from "axios";
 
-export default async function handleLogin(email, password, setMessage) {
+export default function handleLogin(email, password, setMessage) {
   var pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  if (email != "" && password != "") {
-    console.log("first");
+  if (pattern.test(email)) {
+    setMessage("Enter a Valid email Address");
+  } else if (email != "" && password != "") {
     axios
       .post("http://localhost:3000/login", { email, password })
       .then((res) => {
-        res.data.success
-          ? setMessage("Login Success!")
-          : res.data.success == "doesNotExist"
-          ? setMessage("Email does not exist in our record, please register")
-          : setMessage("Invalid Email Id or Password");
+        if (res.data.state == "exist") {
+          setMessage("Log in Success");
+        } else if (res.data.state == "doesNotExist") {
+          setMessage("Email doesn't exist in our record, plese register");
+        } else {
+          setMessage("Wrong Password");
+        }
       })
       .catch((err) => {
         setMessage("Error While Sending the Data");
@@ -22,18 +24,24 @@ export default async function handleLogin(email, password, setMessage) {
           setMessage("");
         }, 2000);
       });
-  } else if (!pattern.test(email)) {
-    setMessage("Enter a Valid email Address");
   } else {
     setMessage("Fill All Fields");
   }
 }
 
-export function handleSignup(uname, email, password, cnfPassword, setMessage) {
+export function handleSignup(
+  uname,
+  email,
+  uid,
+  password,
+  cnfPassword,
+  setMessage
+) {
   var pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!pattern.test(email)) {
     setMessage("Enter valid Email Address");
   } else if (
+    uid != "" &&
     email != "" &&
     password != "" &&
     cnfPassword != "" &&
@@ -41,15 +49,18 @@ export function handleSignup(uname, email, password, cnfPassword, setMessage) {
   ) {
     if (password == cnfPassword) {
       axios
-        .post("http://localhost:3000/signup", { uname, email, cnfPassword })
+        .post("http://localhost:3000/signup", {
+          uname,
+          email,
+          uid,
+          cnfPassword,
+        })
         .then((res) => {
-          res.data.success == "done"
-            ? setMessage("Signup Success!")
-            : res.data.success == "exists"
-            ? setMessage(
-                "Email already exists, Please logIn with your credentials"
-              )
-            : setMessage("Please Fill All Details");
+          if (res.data.state == "done") {
+            setMessage("Signup Success");
+          } else {
+            setMessage("Email already exists, please login");
+          }
         })
         .catch((err) => {
           setMessage("Error While Send the Data");
@@ -65,8 +76,6 @@ export function handleSignup(uname, email, password, cnfPassword, setMessage) {
         setMessage("");
       }, 2000);
     }
-  } else if (!pattern.test(email)) {
-    setMessage("Enter a Valid email Address");
   } else {
     setMessage("Enter All Fields");
   }
