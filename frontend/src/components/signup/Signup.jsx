@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { handleSignup } from "../../assets/helperFunctions/AuthFunctions";
 import Input from "../InputBox/InputBox";
+import Button from "../Button/Button";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
   const [uname, setUname] = useState("");
@@ -8,7 +10,9 @@ function Signup() {
   const [uID, setUID] = useState("");
   const [Password, setPassword] = useState("");
   const [cnfPassword, setCnfPassword] = useState("");
+  const [msgToggler, setMsgToggler] = useState(false);
   const [msg, setMsg] = useState("");
+  const navigate = useNavigate();
   return (
     <>
       <div className="login-container w-full h-screen pt-20 px-2 sm:flex sm:justify-center sm:items-center">
@@ -50,16 +54,42 @@ function Signup() {
               placeholder={"Re enter your password"}
               setter={setCnfPassword}
             />
-
-            <h1>{msg}</h1>
-            <button
-              onClick={() =>
-                handleSignup(uname, email, uID, Password, cnfPassword, setMsg)
-              }
-              className="hover:bg-slate-300 rounded-md px-6 py-2 duration-150"
+            <div
+              role="alert"
+              className={`alert bg-neutral ${msgToggler ? "" : "hidden"} w-3/5`}
             >
-              Submit
-            </button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="stroke-current shrink-0 h-6 w-6"
+                fill="none"
+                color="lightgrey"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <span className="text-slate-200">{msg}</span>
+            </div>
+            <Button
+              onClick={() => {
+                handleSignup(
+                  uname,
+                  email,
+                  uID,
+                  Password,
+                  cnfPassword,
+                  setMsg,
+                  setMsgToggler,
+                  navigate
+                );
+                console.log(msgToggler);
+              }}
+              title={"Submit"}
+            />
           </div>
         </div>
       </div>

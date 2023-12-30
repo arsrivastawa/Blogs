@@ -18,7 +18,7 @@ function Post() {
               Full-House battery backup coming later this year
             </h1>
             <h1 className="author lg:text-lg font-bold text-slate-500">
-              <i class="bi bi-pen"></i>Aditya Ranjan
+              <i className="bi bi-pen"></i>Aditya Ranjan
             </h1>
           </div>
           <h1 className="post-description-preview lg:text-lg text-slate-500 overflow-hidden">

@@ -1,5 +1,5 @@
-const compareIt = require("../PasswordHasher/Password");
-const hashIt = require("../PasswordHasher/Password");
+const { hashIt, compareIt } = require("../PasswordHasher/Password");
+const { signToken } = require("../jwt/tokenSigner");
 const AuthorModel = require("../models/Author");
 
 async function Signup(req, res) {
@@ -16,7 +16,8 @@ async function Signup(req, res) {
       userID: uid,
       hashSalt: salt,
     });
-    res.status(200).json({ state: "done" });
+    const token = signToken(uid);
+    res.status(200).json({ state: "done", token });
   }
 }
 async function Login(req, res) {
@@ -25,7 +26,8 @@ async function Login(req, res) {
   if (found) {
     const truePassword = compareIt(password, found.pass);
     if (truePassword) {
-      res.status(200).json({ state: "exist" });
+      const token = signToken(found.userID);
+      res.status(200).json({ state: "exist", token });
     } else {
       res.status(200).json({ state: "wrongPass" });
     }

@@ -10,5 +10,4 @@ function compareIt(plainPassword, hashedpassword) {
   const result = bc.compareSync(plainPassword, hashedpassword);
   return result;
 }
-module.exports = hashIt;
-module.exports = compareIt;
+module.exports = { hashIt, compareIt };

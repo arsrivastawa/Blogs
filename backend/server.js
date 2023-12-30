@@ -4,8 +4,11 @@ const connectDatabase = require("./helperFunctions/dbConnect");
 const { Signup, Login } = require("./routes/auth");
 const bp = require("body-parser");
 const cors = require("cors");
+const { verifyToken } = require("./jwt/tokenVerifier");
+const { decode } = require("jsonwebtoken");
+const AuthorModel = require("./models/Author");
 
-dotenv.config({ path: "jwt/config.env" });
+dotenv.config({ path: "config/config.env" });
 app.use(cors());
 app.use(bp.json());
 
@@ -14,6 +17,20 @@ connectDatabase();
 app.post("/signup", (req, res) => {
   Signup(req, res);
 });
+
+app.post("/user", async (req, res) => {
+  const { token } = req.body;
+  const decoded = verifyToken(token);
+  const found = await AuthorModel.findOne({ userID: decoded.userID });
+  if (found) {
+    res.status(200).json({
+      username: found.name,
+      useremail: found.email,
+      uid: found.userID,
+    });
+  }
+});
+
 app.post("/login", (req, res) => {
   Login(req, res);
 });
