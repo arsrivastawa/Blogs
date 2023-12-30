@@ -1,6 +1,4 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
 export default function handleLogin(
   email,
   password,
@@ -25,6 +23,7 @@ export default function handleLogin(
           setMessage("Log in Success");
           localStorage.setItem("token", res.data.token);
           navigate("/");
+          window.location.reload();
         } else if (res.data.state == "doesNotExist") {
           setMessageToggler(true);
           setMessage("Email doesn't exist in our record, plese register");
@@ -87,6 +86,7 @@ export function handleSignup(
             setMessage("Signup Success");
             localStorage.setItem("token", res.data.token);
             navigate("/");
+            window.location.reload();
           } else {
             setMessageToggler(true);
             setMessage("Email already exists, please login");
