@@ -4,46 +4,70 @@ export default function handleLogin(
   password,
   setMessage,
   setMessageToggler,
-  navigate
+  navigate,
+  setUser
 ) {
-  var pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!pattern.test(email)) {
-    setMessageToggler(true);
-    setMessage("Enter a Valid email Address");
-    setTimeout(() => {
-      setMessageToggler(false);
-      setMessage("");
-    }, 2000);
-  } else if (email != "" && password != "") {
-    axios
-      .post("http://localhost:3000/login", { email, password })
-      .then((res) => {
-        if (res.data.state == "exist") {
-          setMessageToggler(true);
-          setMessage("Log in Success");
-          localStorage.setItem("token", res.data.token);
-          navigate("/");
-          window.location.reload();
-        } else if (res.data.state == "doesNotExist") {
-          setMessageToggler(true);
-          setMessage("Email doesn't exist in our record, plese register");
-        } else {
-          setMessageToggler(true);
-          setMessage("Wrong Password");
-        }
-      })
-      .catch((err) => {
-        setMessageToggler(true);
-        setMessage("Error While Sending the Data");
-      })
-      .finally(() => {
-        setTimeout(() => {
-          setMessageToggler(false);
-          setMessage("");
-        }, 2000);
-      });
+  if (localStorage.getItem("token")) {
+    axios.post(
+      "http://localhost:3000/login",
+      { token },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "TokenAlreadyExisting",
+        },
+      }
+    ).then;
   } else {
-    setMessage("Fill All the Fields");
+    var pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!pattern.test(email)) {
+      setMessageToggler(true);
+      setMessage("Enter a Valid email Address");
+      setTimeout(() => {
+        setMessageToggler(false);
+        setMessage("");
+      }, 2000);
+    } else if (email != "" && password != "") {
+      axios
+        .post(
+          "http://localhost:3000/login",
+          { email, password },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "TokenNotExisting",
+            },
+          }
+        )
+        .then((res) => {
+          if (res.data.state == "exist") {
+            setMessageToggler(true);
+            setMessage("Log in Success");
+            localStorage.setItem("token", res.data.token);
+            setUser(res.data.userData);
+            navigate("/");
+            // window.location.reload();
+          } else if (res.data.state == "doesNotExist") {
+            setMessageToggler(true);
+            setMessage("Email doesn't exist in our record, plese register");
+          } else {
+            setMessageToggler(true);
+            setMessage("Wrong Password");
+          }
+        })
+        .catch((err) => {
+          setMessageToggler(true);
+          setMessage("Error While Sending the Data");
+        })
+        .finally(() => {
+          setTimeout(() => {
+            setMessageToggler(false);
+            setMessage("");
+          }, 2000);
+        });
+    } else {
+      setMessage("Fill All the Fields");
+    }
   }
 }
 
@@ -55,7 +79,8 @@ export function handleSignup(
   cnfPassword,
   setMessage,
   setMessageToggler,
-  navigate
+  navigate,
+  setUser
 ) {
   var pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!pattern.test(email)) {
@@ -85,8 +110,9 @@ export function handleSignup(
             setMessageToggler(true);
             setMessage("Signup Success");
             localStorage.setItem("token", res.data.token);
+            setUser(res.data.userData);
             navigate("/");
-            window.location.reload();
+            // window.location.reload();
           } else {
             setMessageToggler(true);
             setMessage("Email already exists, please login");

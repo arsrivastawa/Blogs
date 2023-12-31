@@ -32,6 +32,7 @@ app.post("/user", async (req, res) => {
 });
 
 app.post("/login", (req, res) => {
+  console.log(req.headers);
   Login(req, res);
 });
 

@@ -18,7 +18,7 @@ function Avatar({ userName }) {
             tabIndex="0"
             className="dropdown-content z-[1] mt-1 text-slate-200 menu p-2 shadow bg-base-100 rounded-box w-36"
           >
-            <li className="mb-2 font-semibold hover:text-slate-900">
+            <li className="mb-2 font-semibold hover:text-white">
               <a className="bg-neutral">Edit Profile</a>
             </li>
             <li
@@ -28,7 +28,7 @@ function Avatar({ userName }) {
                   localStorage.removeItem("token");
                 window.location.reload();
               }}
-              className="font-semibold hover:text-slate-900"
+              className="font-semibold hover:text-white"
             >
               <a className="bg-neutral">Log out</a>
             </li>

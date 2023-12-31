@@ -9,15 +9,24 @@ async function Signup(req, res) {
     res.status(200).json({ state: "takken" });
   } else {
     const [salt, hashedpassword] = hashIt(cnfPassword);
-    AuthorModel.insertMany({
+    const inserted = await AuthorModel.insertMany({
       name: uname,
       email: email,
       pass: hashedpassword,
       userID: uid,
       hashSalt: salt,
     });
+    console.log(inserted);
     const token = signToken(uid);
-    res.status(200).json({ state: "done", token });
+    res.status(200).json({
+      state: "done",
+      token,
+      userData: {
+        username: inserted[0].name,
+        useremail: inserted[0].email,
+        uid: inserted[0].userID,
+      },
+    });
   }
 }
 async function Login(req, res) {
@@ -27,7 +36,15 @@ async function Login(req, res) {
     const truePassword = compareIt(password, found.pass);
     if (truePassword) {
       const token = signToken(found.userID);
-      res.status(200).json({ state: "exist", token });
+      res.status(200).json({
+        state: "exist",
+        token,
+        userData: {
+          username: found.name,
+          useremail: found.email,
+          uid: found.userID,
+        },
+      });
     } else {
       res.status(200).json({ state: "wrongPass" });
     }

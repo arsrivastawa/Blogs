@@ -5,7 +5,7 @@ function Button({ title, onClick }) {
     <>
       <button
         onClick={onClick}
-        className="btn btn-xs text-base sm:btn-sm md:btn-md btn-neutral"
+        className="btn btn-xs text-base sm:btn-sm md:btn-md btn-neutral text-slate-200"
       >
         {title}
       </button>

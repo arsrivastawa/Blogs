@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { handleSignup } from "../../assets/helperFunctions/AuthFunctions";
 import Input from "../InputBox/InputBox";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
+import { DataContext } from "../../assets/helperFunctions/DataProvider";
 
 function Signup() {
   const [uname, setUname] = useState("");
@@ -12,6 +13,7 @@ function Signup() {
   const [cnfPassword, setCnfPassword] = useState("");
   const [msgToggler, setMsgToggler] = useState(false);
   const [msg, setMsg] = useState("");
+  const User = useContext(DataContext);
   const navigate = useNavigate();
   return (
     <>
@@ -84,7 +86,8 @@ function Signup() {
                   cnfPassword,
                   setMsg,
                   setMsgToggler,
-                  navigate
+                  navigate,
+                  User.setUser
                 );
                 console.log(msgToggler);
               }}

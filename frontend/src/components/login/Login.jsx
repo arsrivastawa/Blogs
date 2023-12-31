@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import handleLogin from "../../assets/helperFunctions/AuthFunctions";
 import Input from "../InputBox/InputBox";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
+import { DataContext } from "../../assets/helperFunctions/DataProvider";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [msgToggler, setMsgToggler] = useState(false);
   const [msg, setMsg] = useState("");
+  const User = useContext(DataContext);
   const navigate = useNavigate();
   return (
     <>
@@ -55,7 +57,14 @@ function Login() {
             <Button
               title={"Submit"}
               onClick={() =>
-                handleLogin(email, Password, setMsg, setMsgToggler, navigate)
+                handleLogin(
+                  email,
+                  Password,
+                  setMsg,
+                  setMsgToggler,
+                  navigate,
+                  User.setUser
+                )
               }
             />
           </div>
