@@ -1,9 +1,11 @@
 import React, { useContext, useState } from "react";
+import Logo from "../../assets/blogger.png";
 import handleLogin from "../../assets/helperFunctions/AuthFunctions";
 import Input from "../InputBox/InputBox";
 import Button from "../Button/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { DataContext } from "../../assets/helperFunctions/DataProvider";
+import Alert from "../alert/Alert";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -14,62 +16,66 @@ function Login() {
   const navigate = useNavigate();
   return (
     <>
-      <div className="login-container w-full h-screen pt-20 px-2 sm:flex sm:justify-center sm:items-center">
-        <div className="min-w-[50%] h-full">
-          <div className="heading">
-            <h1 className="text-xl sm:text-2xl font-bold">Log In</h1>
-          </div>
-          <div className="w-full h-2/5 gap-4 flex flex-col justify-center items-center">
-            <Input
-              type="email"
-              id={"email"}
-              label={"Email"}
-              placeholder={"Enter your email"}
-              setter={setEmail}
-            />
-            <Input
-              type="password"
-              id={"password"}
-              label={"Password"}
-              placeholder={"Enter your password"}
-              setter={setPassword}
-            />
-            <div
-              role="alert"
-              className={`alert bg-neutral ${msgToggler ? "" : "hidden"} w-3/5`}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="stroke-current shrink-0 h-6 w-6"
-                fill="none"
-                color="lightgrey"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+      <section className="bg-gray-50 dark:bg-gray-900">
+        <div className="flex flex-col items-center justify-center px-6 py-6 mx-auto h-screen lg:py-0">
+          <a
+            href="#"
+            className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
+          >
+            <img className="w-8 h-8 mr-2" src={Logo} alt="logo" />
+            Dev-Blogs
+          </a>
+          <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                Sign in to your account
+              </h1>
+              <div className="space-y-4 md:space-y-6">
+                <Input
+                  type="email"
+                  id={"email"}
+                  label={"Email"}
+                  placeholder={"Enter your email"}
+                  setter={setEmail}
                 />
-              </svg>
-              <span className="text-slate-200">{msg}</span>
+                <Input
+                  type="password"
+                  id={"password"}
+                  label={"Password"}
+                  placeholder={"Enter your password"}
+                  setter={setPassword}
+                />
+
+                <Alert messageToggler={msgToggler} message={msg} />
+                <div className="flex w-full justify-center items-center">
+                  <Button
+                    title={"Log In"}
+                    onClick={() =>
+                      handleLogin(
+                        email,
+                        Password,
+                        setMsg,
+                        setMsgToggler,
+                        navigate,
+                        User.setUser
+                      )
+                    }
+                  />
+                </div>
+                <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                  Don’t have an account yet?{" "}
+                  <Link
+                    to="/signup"
+                    className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                  >
+                    Sign up
+                  </Link>
+                </p>
+              </div>
             </div>
-            <Button
-              title={"Submit"}
-              onClick={() =>
-                handleLogin(
-                  email,
-                  Password,
-                  setMsg,
-                  setMsgToggler,
-                  navigate,
-                  User.setUser
-                )
-              }
-            />
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 }

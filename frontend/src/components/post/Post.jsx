@@ -1,35 +1,20 @@
 import React from "react";
-import "./Post.css";
 
-function Post() {
+const BlogCard = ({ imgSrc, title, date, content }) => {
   return (
-    <>
-      <div className="post-container mb-3 w-full h-32 grid">
-        <div className="post-image flex items-center">
-          <img
-            src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGNhcnN8ZW58MHx8MHx8fDA%3D"
-            alt=""
-            className="post-img"
-          />
-        </div>
-        <div className="details flex flex-col overflow-hidden">
-          <div>
-            <h1 className="post-title lg:text-lg font-bold">
-              Full-House battery backup coming later this year
-            </h1>
-            <h1 className="author lg:text-lg font-bold text-slate-500">
-              <i className="bi bi-pen"></i>Aditya Ranjan
-            </h1>
-          </div>
-          <h1 className="post-description-preview lg:text-lg text-slate-500 overflow-hidden">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex corrupti
-            facilis nam, eum consectetur minus exercitationem rerum est ipsam
-            fugiat dolor similique asperiores dolores facere.
-          </h1>
-        </div>
-      </div>
-    </>
+    <div className="bg-white hover:scale-[1.02] cursor-pointer duration-100 dark:bg-gray-800 shadow-lg rounded-lg p-4 max-w-md">
+      <img
+        className="rounded-lg w-full h-32 object-cover mb-4"
+        src={imgSrc}
+        alt={title}
+      />
+      <h2 className="text-xl text-primary-950 font-bold dark:text-primary-50 mb-2">
+        {title}
+      </h2>
+      <p className="text-gray-500 dark:text-gray-300 mb-2">{date}</p>
+      <p className="text-gray-600 dark:text-gray-400">{content}</p>
+    </div>
   );
-}
+};
 
-export default Post;
+export default BlogCard;

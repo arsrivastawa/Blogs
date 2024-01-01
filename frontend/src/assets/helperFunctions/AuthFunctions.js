@@ -8,8 +8,9 @@ export default function handleLogin(
   setUser
 ) {
   if (localStorage.getItem("token")) {
+    const token = localStorage.getItem("token");
     axios.post(
-      "http://localhost:3000/login",
+      "http://192.168.1.1:3000/login",
       { token },
       {
         headers: {
