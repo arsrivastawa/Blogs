@@ -22,7 +22,6 @@ function Login() {
       }, 2000);
   });
   if (localStorage.getItem("token")) {
-    console.log(localStorage.getItem("token"));
     return (
       <div className="w-full dark:bg-gray-900 text-primary-950 dark:text-primary-50 h-screen text-center flex justify-center items-center text-2xl font-bold">
         Yoy Are Already Logged In
