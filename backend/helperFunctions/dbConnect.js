@@ -8,7 +8,7 @@ async function connectDatabase() {
       console.log("Got It");
     })
     .catch((err) => {
-      console.log("Error While Connecting");
+      console.log("Error While Connecting",err);
     });
 }
 
