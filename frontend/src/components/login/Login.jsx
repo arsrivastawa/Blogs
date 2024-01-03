@@ -1,11 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Logo from "../../assets/blogger.png";
 import handleLogin from "../../assets/helperFunctions/AuthFunctions";
 import Input from "../InputBox/InputBox";
 import Button from "../Button/Button";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { DataContext } from "../../assets/helperFunctions/DataProvider";
 import Alert from "../alert/Alert";
+import { motion } from "framer-motion";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -14,10 +15,33 @@ function Login() {
   const [msg, setMsg] = useState("");
   const User = useContext(DataContext);
   const navigate = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("token"))
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+  });
+  if (localStorage.getItem("token")) {
+    console.log(localStorage.getItem("token"));
+    return (
+      <div className="w-full dark:bg-gray-900 text-primary-950 dark:text-primary-50 h-screen text-center flex justify-center items-center text-2xl font-bold">
+        Yoy Are Already Logged In
+        <br />
+        Redirecting...
+      </div>
+    );
+  }
   return (
     <>
       <section className="bg-gray-50 dark:bg-gray-900">
-        <div className="flex flex-col items-center justify-center px-6 py-6 mx-auto h-screen lg:py-0">
+        <motion.div
+          key={useLocation().pathname}
+          initial={{ opacity: 0, x: 100 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -100 }}
+          transition={{ duration: 0.1, ease: "linear" }}
+          className="flex flex-col items-center justify-center px-6 py-6 mx-auto h-screen lg:py-0"
+        >
           <a
             href="#"
             className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
@@ -74,7 +98,7 @@ function Login() {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
     </>
   );

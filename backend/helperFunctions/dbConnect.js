@@ -1,7 +1,9 @@
 const mg = require("mongoose");
+const dotenv = require("dotenv");
 
+dotenv.config({ path: "config/config.env" });
 async function connectDatabase() {
-  mg.connect("mongodb://localhost:27017/blogs")
+  mg.connect(process.env.CONN_STR)
     .then((res) => {
       console.log("Got It");
     })

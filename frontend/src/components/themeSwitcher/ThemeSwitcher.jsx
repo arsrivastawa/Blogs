@@ -1,8 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function ThemeSwitcher() {
   const [isDarkMode, setIsDarkMode] = useState(false);
-
+  useEffect(() => {
+    if (
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      setIsDarkMode(true);
+    } else {
+      setIsDarkMode(false);
+    }
+  }, []);
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
     if (isDarkMode) {

@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
 import Logo from "../../assets/blogger.png";
 import Input from "../InputBox/InputBox";
-
+import { motion } from "framer-motion";
 import { handleSignup } from "../../assets/helperFunctions/AuthFunctions";
 import Button from "../Button/Button";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { DataContext } from "../../assets/helperFunctions/DataProvider";
 import Alert from "../alert/Alert";
 
@@ -21,7 +21,14 @@ function Signup() {
   return (
     <>
       <section className="bg-gray-50 dark:bg-gray-900">
-        <div className="flex flex-col items-center justify-center px-6 py-10 mx-auto min-h-screen">
+        <motion.div
+          key={useLocation().pathname}
+          initial={{ opacity: 0, x: 100 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -100 }}
+          transition={{ duration: 0.1, ease: "linear" }}
+          className="flex flex-col items-center justify-center px-6 py-10 mx-auto min-h-screen"
+        >
           <a
             href="#"
             className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
@@ -100,7 +107,7 @@ function Signup() {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
     </>
   );
