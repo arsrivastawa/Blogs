@@ -36,7 +36,7 @@ app.post("/login", (req, res) => {
   Login(req, res);
 });
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log("Server Started on ", process.env.PORT);
 });
 //

@@ -10,7 +10,7 @@ export default function handleLogin(
   if (localStorage.getItem("token")) {
     const token = localStorage.getItem("token");
     axios.post(
-      "http://192.168.1.1:3000/login",
+      "https://the-dev-blogs.onrender.com/login",
       { token },
       {
         headers: {
@@ -100,7 +100,7 @@ export function handleSignup(
   ) {
     if (password == cnfPassword) {
       axios
-        .post("http://localhost:3000/signup", {
+        .post("https://the-dev-blogs.onrender.com/signup", {
           uname,
           email,
           uid,
