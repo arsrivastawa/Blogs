@@ -8,6 +8,7 @@ import axios from "axios";
 import { DataContext } from "./assets/helperFunctions/DataProvider";
 import Navbar from "./components/navbar/Navbar";
 import MainBlogPage from "./pages/MainBlogPage";
+import Editor from "./pages/BlogsEditor";
 function App() {
   const User = useContext(DataContext);
   console.log(User.userData);
@@ -43,6 +44,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/blogs" element={<MainBlogPage />} />
+          <Route path="/edit" element={<Editor />} />
         </Routes>
       </Router>
     </>
