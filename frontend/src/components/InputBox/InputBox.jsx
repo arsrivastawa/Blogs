@@ -1,6 +1,6 @@
 import React from "react";
 
-function Input({ id, type = "text", label, placeholder, setter }) {
+function Input({ id, type = "text", label, placeholder, setter, spaceY }) {
   return (
     /*     <div className={`${label} password-container sm:w-3/5 flex flex-col`}>
       <label htmlFor={id}>{label}</label>

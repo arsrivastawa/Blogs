@@ -9,6 +9,8 @@ import { DataContext } from "./assets/helperFunctions/DataProvider";
 import Navbar from "./components/navbar/Navbar";
 import MainBlogPage from "./pages/MainBlogPage";
 import Editor from "./pages/BlogsEditor";
+import CreateButton from "./components/createBlogButton/CreateButton";
+import ErrorPage from "./components/404/404";
 function App() {
   const User = useContext(DataContext);
   console.log(User.userData);
@@ -44,8 +46,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/blogs" element={<MainBlogPage />} />
-          <Route path="/edit" element={<Editor />} />
+          <Route path="/create" element={<Editor />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
+        <CreateButton />
       </Router>
     </>
   );

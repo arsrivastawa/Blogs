@@ -30,7 +30,10 @@ app.post("/user", async (req, res) => {
     });
   }
 });
-
+app.post("/createPost", (req, res) => {
+  console.log(req.body);
+  res.json({ mssg: "success" });
+});
 app.post("/login", (req, res) => {
   console.log(req.headers);
   Login(req, res);
