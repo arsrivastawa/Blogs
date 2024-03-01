@@ -10,12 +10,13 @@ import Button from "../components/Button/Button";
 const Editor = () => {
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState(null);
   const [brief, setBrief] = useState("");
+  const [percent, setPercentage] = useState("initial");
   const User = useContext(DataContext);
   const navigate = useNavigate();
 
-  function createNewPost(e) {
+  async function createNewPost(e) {
     e.preventDefault();
     console.log(file[0]);
 
@@ -23,10 +24,21 @@ const Editor = () => {
     data.append("title", title);
     data.append("brief", brief);
     data.append("content", content);
-    data.append("file", file);
+    data.append("fileInput", file);
     axios
-      .post("http://localhost:3000/createPost", data)
+      .post("http://localhost:3000/createPost", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        onUploadProgress: (progressEvent) => {
+          const percentage = Math.round(
+            (progressEvent.loaded / progressEvent.total) * 100
+          );
+          setPercentage(percentage);
+        },
+      })
       .then((res) => console.log(res.data));
+    console.log(file);
   }
 
   let token = localStorage.getItem("token");
@@ -127,6 +139,7 @@ const Editor = () => {
           }}
         />
         <Button spaceY={4} onClick={(e) => createNewPost(e)} title={"Post"} />
+        <div className="text-xl">{percent}</div>
       </div>
     </>
   );
